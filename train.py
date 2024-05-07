@@ -37,29 +37,36 @@ class Train:
         f_lbl.place(x=0,y=440,width=1530,height=325) 
 
     def train_classifier(self):
-        data_dir=("data")  #location dalni hogi data naam ki file ki....or vo abhi daalni h
-        path=[os.path.join(data_dir,file) for file in os.listdir(data_dir)]
-
-        faces=[]
-        ids=[]
+        data_dir = "data"
+        path = [os.path.join(data_dir, file) for file in os.listdir(data_dir)]
+        faces = []
+        ids = []
 
         for image in path:
-            img=Image.open(image).convert('L') #Gray scale image
-            imageNp=np.array(img,'uint8')
-            id=int(os.path.split(image)[1].split('.')[1])
+            img = Image.open(image).convert('L')
+            imageNp = np.array(img,'uint8')
+            id = int(os.path.split(image)[1].split('.')[1])
 
             faces.append(imageNp)
             ids.append(id)
             cv2.imshow("Training",imageNp)
-            cv2.waitKey(1)==13
-        ids=np.array(ids) 
+            cv2.waitKey(1) # Close the OpenCV window after training
+        ids = np.array(id)
 
-    #============== Train the classifier And Save====================   
-        clf=cv2.face.LBPHFaceRecognizer_create()
+    # Train the classifier and save
+        clf = cv2.face.LBPHFaceRecognizer_create()
         clf.train(faces,ids)
         clf.write("classifier.xml")
         cv2.destroyAllWindows()
-        messagebox.showinfo("Result Training datasets completed !!")
+        
+        messagebox.showinfo("Result", "Training datasets completed !!")
+
+    # Display the message box after training is completed and OpenCV window is closed
+        
+
+
+
+        
 
 
 
